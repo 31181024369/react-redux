@@ -6,7 +6,7 @@ import userReducer from './user/user.slice';
 export const store = configureStore({
   reducer: {
     count: counterReducer, // Use the actual reducer function here
-    user:userReducer
+    user:userReducer,
   },
 })
 
