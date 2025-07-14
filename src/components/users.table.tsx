@@ -1,27 +1,37 @@
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
+import { useAppDispatch, useAppSelector } from '../redux/hook';
+import { fetchListUsers } from '../redux/user/user.slice';
+import { ToastContainer, toast } from 'react-toastify';
 interface IUser{
     id:number,
     name:string,
     email:string
 }
 const UsersTable=()=>{
-    const [users,setUsers]=useState<IUser[]>([]);
-    const fetchAllUsers=async()=>{
-        const res=await fetch("http://localhost:8000/users");
-        const data=await res.json();
-        setUsers(data);
-        console.log("data user:",data);
-    }
+    
+    // const fetchAllUsers=async()=>{
+    //     const res=await fetch("http://localhost:8000/users");
+    //     const data=await res.json();
+    //     setUsers(data);
+    //     console.log("data user:",data);
+    // }
+    // useEffect(()=>{
+    //     fetchAllUsers();
+    // },[])
+   
+    const dispatch=useAppDispatch();
+    const users=useAppSelector(state=>state.user.listUsers);
     useEffect(()=>{
-        fetchAllUsers();
-    },[])
+        dispatch(fetchListUsers());
+        toast.success("success users");
+    },[]);
     return (
         <>
         <Table striped bordered hover>
       <thead>
         <tr>
-          <th>#</th>
+       
           <th>Id</th>
           <th>Name</th>
           <th>Email</th>
