@@ -1,10 +1,15 @@
-import { useState } from 'react'
+
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { decrement, increment } from './redux/counter/counter.slice'
+import { useAppDispatch, useAppSelector } from './redux/hook'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const count=useAppSelector(state=>state.count);
+  const dispatch=useAppDispatch();
+  console.log(">>> check count=",count);
+
 
   return (
     <>
@@ -16,18 +21,24 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+    <div>
+      <h1>My current count={count.value}</h1>
+      <div>
+        <button 
+        onClick={()=>dispatch(
+          increment()
+        )}
+        >Increase+1</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div>
+         <button 
+        onClick={()=>dispatch(
+          decrement()
+        )}
+        >decrement-1</button>
+      </div>
+
+    </div>
     </>
   )
 }
