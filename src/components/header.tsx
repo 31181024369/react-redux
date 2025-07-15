@@ -22,10 +22,10 @@ const Header=()=>{
                 <Navbar.Text>
                     <Form>
                         <Form.Check // prettier-ignore
-                        value={mode}
+                        defaultChecked={mode==="light"?false:true}
                         onChange={(event)=>{
                             console.log("data mode:",event.target.value);
-                            dispatch(changeMode(event.target.value==="light"?"dark":"light"))
+                            dispatch(changeMode(event.target.checked===true?"dark":"light"))
                         }}
                             type="switch"
                             id="custom-switch"
