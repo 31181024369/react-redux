@@ -1,11 +1,17 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
-import { useAppSelector } from '../redux/hook';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../redux/hook';
+import { useEffect, useState } from 'react';
+import { changeMode } from '../redux/app/app.slice';
 const Header=()=>{
     const users=useAppSelector(state=>state.user.listUsers);
-    const [mode,setMode]=useState("light");
+    const dispatch=useAppDispatch();
+    const mode=useAppSelector(state=>state.app.mode);
+    useEffect(()=>{
+        const body=document.querySelector("body");
+        if(body) body.setAttribute('data-bs-theme',mode);
+    },[mode])
     return (
         <>
         <Navbar className="bg-body-tertiary" data-bs-theme={mode}>
@@ -19,7 +25,7 @@ const Header=()=>{
                         value={mode}
                         onChange={(event)=>{
                             console.log("data mode:",event.target.value);
-                            setMode(event.target.value==="light"?"dark":"light")
+                            dispatch(changeMode(event.target.value==="light"?"dark":"light"))
                         }}
                             type="switch"
                             id="custom-switch"
